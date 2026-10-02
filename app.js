@@ -97,6 +97,6 @@ app.delete("/listings/:id", async (req, res) => {
 
 //Root Route
 app.get("/", (req, res) => {
-  res.send("welcome to root page");
+  // res.send("welcome to root page");
   res.redirect("/listings");
 });
