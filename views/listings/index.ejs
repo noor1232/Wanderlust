@@ -10,7 +10,7 @@
         <div class="card-img-overlay"></div>
         <div class="card-body">
           <p class="card-text"><b><%= list.title %></b><br>
-            &#x20B9;<%= (list.price || 0).toLocaleString("en-IN") %>
+           &#x20B9;<%= list.price != null ? list.price.toLocaleString("en-IN") : "Price not available" %>
           </p>
         </div>
     </div>
