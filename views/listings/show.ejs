@@ -15,7 +15,7 @@
           <%= listing.location %> <b>,</b><%= listing.country %><br />
           <br />
           <%= listing.description %><br />
-          &#x20B9;<%= listing.price.toLocaleString("en-IN") %><br />
+          &#x20B9;<%= listing.price != null ? listing.price.toLocaleString("en-IN") : "Price not available" %><br /><br />
           
         </p>
       </div>
