@@ -49,6 +49,17 @@ app.use(express.static(path.join(__dirname, "/public")));
 //   res.send("successful testing");
 // });
 
+//middleware for schema validation
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+
+  if (error) {
+    let errmsg = error.details.map((el) => el.message).join(",");
+    throw new expressError(404, error);
+  } else {
+    next();
+  }
+};
 //index Route
 app.get(
   "/listings",
@@ -78,6 +89,7 @@ app.get(
 //Update Route
 app.put(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
     if (!req.body.listing) {
       throw new expressError(404, "send valid data for listing");
@@ -92,12 +104,8 @@ app.put(
 //create Route
 app.post(
   "/listings",
+  validateListing,
   wrapAsync(async (req, res, next) => {
-    let result = listingSchema.validate(req.body);
-    //console.log(result);
-    if (result.error) {
-      throw new expressError(404, result.error);
-    }
     let newlisting = new Listing(req.body.listing);
 
     await newlisting.save();
